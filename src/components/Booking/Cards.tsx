@@ -8,9 +8,9 @@ function Cards() {
     return (
         <div className='mt-3'>
             <h2 className='font-semibold'>Payment Options</h2>
-            <div className='grid grid-cols-4 mt-2 h-[35px]'>
+            <div className='grid grid-cols-4 mt-2 h-[45px]'>
                 {CardsList.map((item, index) => (
-                    <div className={`rounded-md h-[30] w-[50px] 
+                    <div className={`rounded-md h-[38] w-[60px] 
                     border-[1px] flex items-center 
                     justify-center 
                     cursor-pointer 
@@ -19,7 +19,7 @@ function Cards() {
                     onClick={()=>setActiveindex(index)}>
                         <Image src={item.image}
                             alt='Payment Option'
-                            width={30}
+                            width={36}
                             height={50}
                         />
                     </div>
