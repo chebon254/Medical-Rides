@@ -8,6 +8,7 @@ import { SourceCoordiContext } from '@/context/SourceCoordiContext';
 import Markers from './Markers';
 import { DirectionDataContext } from '@/context/DirectionDataContext';
 import MapBoxRoute from './MapBoxRoute';
+import DistanceTime from './DistanceTime';
 
 const MAPBOX_DRIVING_ENDPOINT = "https://api.mapbox.com/directions/v5/mapbox/driving/"
 const session_token = "0e4d5549-e85f-4591-88f5-11822aa0aaba"
@@ -65,7 +66,7 @@ function MapBoxMap() {
   };
 
   return (
-    <div className='m-1'>
+    <div className='m-1 relative'>
       <h2 className='text-[20px] font-semibold'>Map</h2>
       <div className='rounded-lg overflow-hidden'>
         {userLocation ? (
@@ -89,6 +90,9 @@ function MapBoxMap() {
             ):null}
           </Map>
         ) : null}
+      </div>
+      <div className='absolute bottom-[40px] z-20 right-[20px] hidden md:block'>
+        <DistanceTime/>
       </div>
     </div>
   );
