@@ -27,9 +27,6 @@ function MapBoxMap() {
       })
       console.log(sourceCoordinates.lng +", "+ sourceCoordinates.lat);
     }
-    if(sourceCoordinates&&destinationCoordinates){
-      getDirectionRoute();
-    }
   }, [sourceCoordinates])
 
   useEffect(()=>{
@@ -40,6 +37,13 @@ function MapBoxMap() {
       console.log(destinationCoordinates.lng +", "+ destinationCoordinates.lat);
     }
   }, [destinationCoordinates])
+
+  useEffect(() => {
+    if (sourceCoordinates && destinationCoordinates) {
+      getDirectionRoute();
+    }
+  }, [sourceCoordinates, destinationCoordinates]);
+  
 
   const getDirectionRoute = async () => {
     if (!sourceCoordinates || !destinationCoordinates) {

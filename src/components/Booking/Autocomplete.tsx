@@ -56,7 +56,7 @@ function Autocomplete() {
 
   const onSourceAddressClick = async (item: any) => {
     setSource(item.full_address);
-    setAddressList([])
+    setAddressList([]);
     const res = await fetch(MAPBOX_RETRIEVE_URL + item.mapbox_id + "?session_token=" + session_token + "&access_token=" + process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN)
     const clickresult = await res.json();
     setSourceCoordinates({
@@ -68,7 +68,7 @@ function Autocomplete() {
 
   const onDestinationAddressClick = async (item: any) => {
     setdestination(item.full_address);
-    setDestinationAddressList([])
+    setDestinationAddressList([]);
     const res = await fetch(MAPBOX_RETRIEVE_URL + item.mapbox_id + "?session_token=" + session_token + "&access_token=" + process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN)
     const clickresult = await res.json();
     setDestinationCoordinates({
@@ -84,25 +84,25 @@ function Autocomplete() {
           value={source}
           onChange={(e) => setSource(e.target.value)}
         />
-        {addressList?.searchResult?.suggestions?.length > 0 && (
-          <div className="absolute shadow-md p-1 rounded-md w-full bg-white">
-            {addressList.searchResult.suggestions.map((item: any, index: number) => (
-              <h2 key={index} className="p-3 hover:bg-grey-100 cursor-pointer" onClick={() => {
-                onSourceAddressClick(item)
-              }}>
-                {item.full_address}
-              </h2>
-            ))}
-          </div>
-        )}
+        {source && addressList?.searchResult?.suggestions?.length > 0 && (
+        <div className="absolute shadow-md p-1 rounded-md w-full bg-white">
+          {addressList.searchResult.suggestions.map((item: any, index: number) => (
+            <h2 key={index} className="p-3 hover:bg-grey-100 cursor-pointer" onClick={() => {
+              onSourceAddressClick(item)
+            }}>
+              {item.full_address}
+            </h2>
+          ))}
+        </div>
+      )}
       </div>
-      <div className="mt-3">
+      <div className="mt-3 relative">
         <label>Where To?</label>
         <input type="text" className="bg-white p-1 focus:border-yellow-300 border-[1px] w-full rounded-md outline-none"
           value={destination}
           onChange={(e) => setdestination(e.target.value)}
         />
-        {destinationAddressList?.searchResult?.suggestions?.length > 0 && (
+        {destination && destinationAddressList?.searchResult?.suggestions?.length > 0 && (
           <div className="absolute shadow-md p-1 rounded-md w-full bg-white">
             {destinationAddressList.searchResult.suggestions.map((item: any, index: number) => (
               <h2 key={index} className="p-3 hover:bg-grey-100 cursor-pointer" onClick={() => {
