@@ -1,16 +1,16 @@
 "use client"
+import React, { useContext } from 'react';
 import CheckoutForm from '@/components/Payment/CheckoutForm';
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import React, { useContext, useState } from 'react'
 
 function Payment() {
-    const [ carAmount, setCarAmount ] = useState();
-    const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as any)
+    const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as any);
+    // const { carAmount } = useContext(SelectedCarAmountContext);
     const options:any = {
         mode: 'payment',
-        amount: carAmount,
+        amount: 60, // use carAmount from context
         currency: 'usd',
     };
     return (
@@ -20,4 +20,4 @@ function Payment() {
   )
 }
 
-export default Payment
+export default Payment;
