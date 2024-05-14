@@ -6,15 +6,14 @@ import { SourceCoordiContext } from '@/context/SourceCoordiContext'
 import { DestinationCoordiContext } from '@/context/DestinationCoordiContext'
 import { DirectionDataContext } from '@/context/DirectionDataContext'
 import React, { useState, useEffect, useContext } from 'react'
-import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext'
+import { CarAmountProvider, CarAmountContext } from "@/context/CarAmountContext";
 
 function Schedule() {
   // State initialization
   const [userLocation, setUserLocation] = useState<any>();
-  const [sourceCoordinates, setSourceCoordinates] = useState(); // Initialize state for sourceCoordinates
-  const [destinationCoordinates, setDestinationCoordinates] = useState(); // Initialize state for destinationCoordinates
+  const [sourceCoordinates, setSourceCoordinates] = useState();
+  const [destinationCoordinates, setDestinationCoordinates] = useState();
   const [directionData, setDirectionData] = useState<any>();
-  const [carAmount, setCarAmount] = useState<any>();
 
   // Side effects
   useEffect(() => {
@@ -33,7 +32,7 @@ function Schedule() {
       <SourceCoordiContext.Provider value={{ sourceCoordinates, setSourceCoordinates }}>
         <DestinationCoordiContext.Provider value={{ destinationCoordinates, setDestinationCoordinates }}>
           <DirectionDataContext.Provider value={{ directionData, setDirectionData }}>
-            <SelectedCarAmountContext.Provider value={{ carAmount, setCarAmount }}>
+            <CarAmountProvider>
               <div className="grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 container">
                 <div className="">
                   <Booking />
@@ -42,11 +41,11 @@ function Schedule() {
                   <MapBoxMap />
                 </div>
               </div>
-            </SelectedCarAmountContext.Provider>
+            </CarAmountProvider>
           </DirectionDataContext.Provider>
         </DestinationCoordiContext.Provider>
       </SourceCoordiContext.Provider>
-    </UserLocationContext.Provider >
+    </UserLocationContext.Provider>
   );
 }
 

@@ -1,12 +1,13 @@
+"use client"
 import React, { useContext, useState } from 'react'
 import Autocomplete from './Autocomplete'
 import Cars from './Cars'
 import Cards from './Cards'
 import { useRouter } from 'next/navigation'
-import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext'
+import { CarAmountContext } from '@/context/CarAmountContext'
 
 function Booking() {
-  const { carAmount, setCarAmount } = useContext(SelectedCarAmountContext);
+  const { carAmount, setCarAmount } = useContext(CarAmountContext);
   const router:any = useRouter();
   return (
     <div>

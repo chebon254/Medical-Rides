@@ -11,13 +11,6 @@ function Autocomplete() {
   const [source, setSource] = useState<any>();
   const [addressList, setAddressList] = useState<any>([]);
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      getAddressList();
-    }, 1000);
-    return () => clearTimeout(delayDebounceFn);
-  }, [source]);
-
   const getAddressList = async () => {
     const res = await fetch('api/search-address?q=' + source, {
       headers: {
@@ -28,16 +21,17 @@ function Autocomplete() {
     const result = await res.json();
     setAddressList(result);
   }
-  // Destination Location
-  const [destination, setdestination] = useState<any>();
-  const [destinationAddressList, setDestinationAddressList] = useState<any>([]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      getdestinationAddressList();
+      getAddressList();
     }, 1000);
     return () => clearTimeout(delayDebounceFn);
-  }, [destination]);
+  }, [source, getAddressList]); // Add getAddressList to dependency array
+  
+  // Destination Location
+  const [destination, setdestination] = useState<any>();
+  const [destinationAddressList, setDestinationAddressList] = useState<any>([]);
 
   const getdestinationAddressList = async () => {
     const destinationres = await fetch('api/search-address?q=' + destination, {
@@ -49,6 +43,13 @@ function Autocomplete() {
     const destinationresult = await destinationres.json();
     setDestinationAddressList(destinationresult);
   }
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      getdestinationAddressList();
+    }, 1000);
+    return () => clearTimeout(delayDebounceFn);
+  }, [destination, getdestinationAddressList]);
 
   // Longitude and latitude
   const { sourceCoordinates, setSourceCoordinates } = useContext(SourceCoordiContext);
