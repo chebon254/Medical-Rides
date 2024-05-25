@@ -10,7 +10,7 @@ function Cards() {
             <h2 className='font-semibold'>Payment Options</h2>
             <div className='grid grid-cols-4 mt-2 h-[45px]'>
                 {CardsList.map((item, index) => (
-                    <div className={`rounded-md h-[38] w-[60px] 
+                    <div key={item.id} className={`rounded-md h-[38] w-[60px] 
                     border-[1px] flex items-center 
                     justify-center 
                     cursor-pointer 

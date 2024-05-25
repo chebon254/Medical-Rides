@@ -1,17 +1,17 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
 interface CarAmountContextValue {
-  carAmount: number | null;
-  setCarAmount: (amount: number | null) => void;
+  carAmount: number;
+  setCarAmount: (amount: number) => void;
 }
 
 export const CarAmountContext = createContext<CarAmountContextValue>({
-  carAmount: null,
+  carAmount: 0,
   setCarAmount: () => {},
 });
 
 export const CarAmountProvider = ({ children }: { children: React.ReactNode }) => {
-  const [carAmount, setCarAmount] = useState<number | null>(null);
+  const [carAmount, setCarAmount] = useState<number>(0);
 
   return (
     <CarAmountContext.Provider value={{ carAmount, setCarAmount }}>
@@ -19,3 +19,4 @@ export const CarAmountProvider = ({ children }: { children: React.ReactNode }) =
     </CarAmountContext.Provider>
   );
 };
+
