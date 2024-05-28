@@ -71,7 +71,7 @@ function MapBoxMap() {
 
   return (
     <div className='m-1 relative'>
-      <h2 className='text-[20px] font-semibold'>Map</h2>
+      <h2 className='hidden text-[20px] font-semibold'>Map</h2>
       <div className='rounded-lg overflow-hidden'>
         {userLocation ? (
           <Map
@@ -95,7 +95,7 @@ function MapBoxMap() {
           </Map>
         ) : null}
       </div>
-      <div className='absolute bottom-[40px] z-20 right-[20px] hidden md:block'>
+      <div className=' bottom-[40px] z-20 right-[20px] hidden md:block'>
         <DistanceTime/>
       </div>
     </div>

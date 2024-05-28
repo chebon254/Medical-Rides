@@ -4,6 +4,7 @@ import CarsList from '../Data/CarsList'
 import Image from 'next/image'
 import { DirectionDataContext } from '@/context/DirectionDataContext';
 import { CarAmountContext } from "@/context/CarAmountContext";
+import DistanceTime from '../Map/DistanceTime';
 
 // Cars component
 function Cars() {
@@ -35,6 +36,7 @@ function Cars() {
 
   return (
     <div className='mt-3'>
+      <DistanceTime/>
       <h2 className='font-semibold'>Select Car</h2>
       <div className='grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 m-1 p-2'>
         {CarsList.map((item, index) => (

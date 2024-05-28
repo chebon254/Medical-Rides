@@ -7,11 +7,11 @@ function DistanceTime() {
     return directionData?.routes&&(
         <div className='bg-yellow-500 p-3'>
             <h2 className='text-yellow-100 opacity-80 text-[15px]'>
-                Distance: <span className='font-bold text-black'>{(directionData?.routes[0]?.distance*0.000621371192).toFixed(2)} Miles </span>
-                Duration: <span className='font-bold text-black'>{(directionData?.routes[0]?.duration/60).toFixed(0)} Min</span>
+                Distance: <span className='pr-4 font-bold text-black'>{(directionData?.routes[0]?.distance*0.000621371192).toFixed(2)} Miles </span>
+                Cost: <span className='font-bold text-black'>${(directionData?.routes[0]?.distance*0.000621371192 * 2).toFixed(0)}</span>
             </h2>
         </div>
     )
 }
 
-export default DistanceTime
+export default DistanceTime;
