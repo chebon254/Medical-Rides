@@ -1,5 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
@@ -13,18 +14,18 @@ datasource db {
 }
 
 model Booking {
-  id                    Int      @id @default(autoincrement())
-  name                  String
-  phone                 String
-  pickUpDate            DateTime
-  pickUpTime            String
-  returnTime            String
-  sourceAddress         String
-  destinationAddress    String
-  sourceLongitude       Float
-  sourceLatitude        Float
-  destinationLongitude  Float
-  destinationLatitude   Float
-  amount                Int      // Add this line
-  createdAt             DateTime @default(now())
+  id                Int      @id @default(autoincrement())
+  name              String
+  phone             String
+  amount            Float    @default(0) // Add default value
+  pickUpDate        DateTime
+  pickUpTime        String
+  returnTime        String
+  sourceAddress     String
+  destinationAddress String
+  sourceLongitude   Float
+  sourceLatitude    Float
+  destinationLongitude Float
+  destinationLatitude Float
+  createdAt         DateTime @default(now())
 }

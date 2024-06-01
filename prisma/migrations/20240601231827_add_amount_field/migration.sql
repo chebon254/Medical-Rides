@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `booking` ADD COLUMN `amount` DOUBLE NOT NULL DEFAULT 0;

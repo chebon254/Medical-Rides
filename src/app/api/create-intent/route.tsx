@@ -23,6 +23,7 @@ export async function POST(request: any) {
       data: {
         name,
         phone,
+        amount: Number(amount) / 100, // Add amount field
         pickUpDate: new Date(pickUpDate),
         pickUpTime,
         returnTime,
@@ -32,7 +33,6 @@ export async function POST(request: any) {
         sourceLatitude: sourceCoordinates.lat,
         destinationLongitude: destinationCoordinates.lng,
         destinationLatitude: destinationCoordinates.lat,
-        amount: Number(amount), // Add this line to include the amount in the database
       },
     });
 
