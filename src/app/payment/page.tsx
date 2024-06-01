@@ -7,17 +7,17 @@ import { loadStripe } from '@stripe/stripe-js';
 
 function Payment() {
     const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as any);
-    // const { carAmount } = useContext(SelectedCarAmountContext);
-    const options:any = {
+    const { carAmount, setCarAmount } = useContext(SelectedCarAmountContext);
+    const options: any = {
         mode: 'payment',
-        amount: 60, // use carAmount from context
+        amount: carAmount * 100, // convert carAmount to cents
         currency: 'usd',
     };
     return (
-    <Elements stripe={stripePromise} options={options}>
-        <CheckoutForm />
-    </Elements>
-  )
+        <Elements stripe={stripePromise} options={options}>
+            <CheckoutForm />
+        </Elements>
+    );
 }
 
 export default Payment;
