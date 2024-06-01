@@ -4,6 +4,7 @@ import Cars from './Cars'
 import Cards from './Cards'
 import { useRouter } from 'next/navigation'
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext'
+import FormDetails from './FormDetails'
 
 function Booking() {
   const { carAmount, setCarAmount } = useContext(SelectedCarAmountContext);
@@ -11,6 +12,7 @@ function Booking() {
   return (
     <div>
         <h2 className='text-[20px] font-semibold'>Booking</h2>
+        <FormDetails />
         <Autocomplete />
         <Cars />
         <Cards />

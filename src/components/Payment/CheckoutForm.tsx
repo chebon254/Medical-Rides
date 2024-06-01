@@ -1,12 +1,29 @@
-"use client"
+//src/components/Payment/CheckoutForm.tsx:
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
+import { UserLocationContext } from '@/context/UserLocationContext';
+import { SourceCoordiContext } from '@/context/SourceCoordiContext';
+import { DestinationCoordiContext } from '@/context/DestinationCoordiContext';
+import { FormDetailsContext } from '@/context/FormDetailsContext';
+import { useAddressContext } from '@/context/AddressContext';
 import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 function CheckoutForm() {
     const stripe: any = useStripe();
     const elements = useElements();
     const { carAmount } = useContext(SelectedCarAmountContext);
+    const { userLocation } = useContext(UserLocationContext);
+    const { sourceCoordinates } = useContext(SourceCoordiContext);
+    const { destinationCoordinates } = useContext(DestinationCoordiContext);
+    const formDetailsContext = useContext(FormDetailsContext);
+    const { sourceAddress, destinationAddress } = useAddressContext();
+
+    // Type guard
+    if (!formDetailsContext) {
+        throw new Error('FormDetailsContext is not available');
+    }
+
+    const { formDetails } = formDetailsContext;
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
@@ -21,8 +38,20 @@ function CheckoutForm() {
 
         const res = await fetch("/api/create-intent", {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify({
                 amount: carAmount * 100, // convert carAmount to cents
+                name: formDetails.name,
+                phone: formDetails.phone,
+                pickUpDate: formDetails.pickUpDate,
+                pickUpTime: formDetails.pickUpTime,
+                returnTime: formDetails.returnTime,
+                sourceAddress: sourceAddress,
+                destinationAddress: destinationAddress,
+                sourceCoordinates: sourceCoordinates,
+                destinationCoordinates: destinationCoordinates,
             }),
         });
 
@@ -30,7 +59,7 @@ function CheckoutForm() {
         console.log(sec);
 
         const { error } = await stripe.confirmPayment({
-            clientSecret: sec,
+            clientSecret: sec.clientSecret,
             elements,
             confirmParams: {
                 return_url: "http://localhost:3000/success"
