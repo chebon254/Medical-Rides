@@ -2,9 +2,10 @@ export interface Booking {
     id: number;
     name: string;
     phone: string;
+    amount: GLfloat;
     pickUpDate: string;
     pickUpTime: string;
-    pickUpAddress: string;
-    dropOffAddress: string;
+    sourceAddress: string;
+    destinationAddress: string;
   }
   

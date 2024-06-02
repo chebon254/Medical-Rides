@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminMap from './AdminMap';
 import { Booking } from '@/types/booking';
+import "../../styles/global.css"
 
 function BookingTable() {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -28,7 +29,7 @@ function BookingTable() {
   };
 
   return (
-    <div>
+    <div className="container m-auto">
       <table className="table-auto w-full">
         <thead>
           <tr>
@@ -36,6 +37,7 @@ function BookingTable() {
             <th>Phone</th>
             <th>Pick Up Date</th>
             <th>Pick Up Time</th>
+            <th>Amount</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -46,6 +48,7 @@ function BookingTable() {
               <td>{booking.phone}</td>
               <td>{new Date(booking.pickUpDate).toLocaleDateString()}</td>
               <td>{booking.pickUpTime}</td>
+              <td>${booking.amount}</td>
               <td>
                 <button onClick={() => handleViewDetails(booking)}>View Details</button>
               </td>
@@ -55,13 +58,14 @@ function BookingTable() {
       </table>
       {selectedBooking && (
         <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={() => setSelectedBooking(null)}>&times;</span>
-            <h2>Booking Details</h2>
-            <p>Name: {selectedBooking.name}</p>
-            <p>Phone: {selectedBooking.phone}</p>
-            <p>Pick Up Address: {selectedBooking.pickUpAddress}</p>
-            <p>Drop Off Address: {selectedBooking.dropOffAddress}</p>
+          <div className="modal-content relative z-0 pt-8">
+            <span className="close absolute top-2 right-5 z-10" onClick={() => setSelectedBooking(null)}>&times;</span>
+            <h2 className="mb-3 font-bold text-2xl">Booking Details</h2>
+            <p className="my-1"><span className="font-semibold">Name:</span> {selectedBooking.name}</p>
+            <p className="my-1"><span className="font-semibold">Phone:</span> {selectedBooking.phone}</p>
+            <p className="my-1"><span className="font-semibold">Amount Paid:</span> ${selectedBooking.amount}</p>
+            <p className="my-1"><span className="font-semibold">Pick Up Address:</span> {selectedBooking.sourceAddress}</p>
+            <p className="my-1 mb-6"><span className="font-semibold">Drop Off Address:</span> {selectedBooking.destinationAddress}</p>
             <AdminMap />
           </div>
         </div>

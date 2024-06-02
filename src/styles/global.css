@@ -1,4 +1,63 @@
-.modal {
+.container {
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .table-auto {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-auto th{
+    border: 0px;
+    padding: 14px 8px;
+    text-align: left;
+    color: #ffffff;
+  }
+  .table-auto td {
+    border: 0px;
+    padding: 8px;
+    text-align: left;
+    color: #2e2e2e;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  
+  .table-auto thead {
+    background-color: #2e2e2e;
+  }
+  
+  .table-auto tbody tr:nth-child(odd) {
+    background-color: #f1f1f1;
+  }
+  
+  .table-auto tbody tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+  
+  .table-auto tbody tr:hover {
+    background-color: #484848;
+  }
+
+  .table-auto tbody tr:hover td{
+    color: #ffffff;
+    cursor: default;
+  }
+  
+  button {
+    background-color: #1f73ff;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #165bbd;
+  }
+  
+  .modal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,15 +68,17 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
   }
   
   .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
+    background-color: #2e2e2e;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #333;
     width: 80%;
+    max-width: 600px;
+    color: #fff;
   }
   
   .close {
@@ -29,7 +90,7 @@
   
   .close:hover,
   .close:focus {
-    color: black;
+    color: #000;
     text-decoration: none;
     cursor: pointer;
   }
