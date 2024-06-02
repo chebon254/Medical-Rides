@@ -15,8 +15,8 @@ function Modal({ booking, onClose }: ModalProps) {
         <h2>Booking Details</h2>
         <p>Name: {booking.name}</p>
         <p>Phone: {booking.phone}</p>
-        <p>Pick Up Address: {booking.pickUpAddress}</p>
-        <p>Drop Off Address: {booking.dropOffAddress}</p>
+        <p>Pick Up Address: {booking.sourceAddress}</p>
+        <p>Drop Off Address: {booking.destinationAddress}</p>
         <AdminMap />
       </div>
     </div>
