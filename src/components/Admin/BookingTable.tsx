@@ -7,6 +7,8 @@ import "../../styles/global.css"
 function BookingTable() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const [sourceCoordinates, setSourceCoordinates] = useState<{ lng: number; lat: number } | null>(null);
+  const [destinationCoordinates, setDestinationCoordinates] = useState<{ lng: number; lat: number } | null>(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -26,6 +28,8 @@ function BookingTable() {
 
   const handleViewDetails = (booking: Booking) => {
     setSelectedBooking(booking);
+    setSourceCoordinates({ lng: booking.sourceLongitude, lat: booking.sourceLatitude });
+    setDestinationCoordinates({ lng: booking.destinationLongitude, lat: booking.destinationLatitude });
   };
 
   return (
@@ -66,7 +70,10 @@ function BookingTable() {
             <p className="my-1"><span className="font-semibold">Amount Paid:</span> ${selectedBooking.amount}</p>
             <p className="my-1"><span className="font-semibold">Pick Up Address:</span> {selectedBooking.sourceAddress}</p>
             <p className="my-1 mb-6"><span className="font-semibold">Drop Off Address:</span> {selectedBooking.destinationAddress}</p>
-            <AdminMap />
+            <AdminMap
+              sourceCoordinates={sourceCoordinates}
+              destinationCoordinates={destinationCoordinates}
+            />
           </div>
         </div>
       )}

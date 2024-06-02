@@ -8,6 +8,16 @@ interface ModalProps {
 }
 
 function Modal({ booking, onClose }: ModalProps) {
+  const sourceCoordinates = {
+    lng: booking.sourceLongitude,
+    lat: booking.sourceLatitude,
+  };
+
+  const destinationCoordinates = {
+    lng: booking.destinationLongitude,
+    lat: booking.destinationLatitude,
+  };
+
   return (
     <div className="modal">
       <div className="modal-content">
@@ -17,7 +27,10 @@ function Modal({ booking, onClose }: ModalProps) {
         <p>Phone: {booking.phone}</p>
         <p>Pick Up Address: {booking.sourceAddress}</p>
         <p>Drop Off Address: {booking.destinationAddress}</p>
-        <AdminMap />
+        <AdminMap
+          sourceCoordinates={sourceCoordinates}
+          destinationCoordinates={destinationCoordinates}
+        />
       </div>
     </div>
   );

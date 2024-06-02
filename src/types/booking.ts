@@ -7,5 +7,9 @@ export interface Booking {
     pickUpTime: string;
     sourceAddress: string;
     destinationAddress: string;
+    sourceLongitude: GLfloat;
+    sourceLatitude: GLfloat;
+    destinationLongitude: GLfloat;
+    destinationLatitude: GLfloat;
   }
   

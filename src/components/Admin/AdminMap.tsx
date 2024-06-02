@@ -2,8 +2,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import Map from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { SourceCoordiContext } from '@/context/SourceCoordiContext';
-import { DestinationCoordiContext } from '@/context/DestinationCoordiContext';
 import { DirectionDataContext } from '@/context/DirectionDataContext';
 import AdminMarkers from './AdminMarkers';
 import AdminMapBoxRoute from './AdminMapBoxRoute';
@@ -11,10 +9,8 @@ import AdminDistanceTime from './AdminDistanceTime';
 
 const MAPBOX_DRIVING_ENDPOINT = "https://api.mapbox.com/directions/v5/mapbox/driving/";
 
-function AdminMap() {
+function AdminMap({ sourceCoordinates, destinationCoordinates }: { sourceCoordinates: { lng: number; lat: number } | null; destinationCoordinates: { lng: number; lat: number } | null }) {
   const mapRef = useRef<any>();
-  const { sourceCoordinates, setSourceCoordinates } = useContext(SourceCoordiContext);
-  const { destinationCoordinates, setDestinationCoordinates } = useContext(DestinationCoordiContext);
   const { directionData, setDirectionData } = useContext(DirectionDataContext);
 
   useEffect(() => {
