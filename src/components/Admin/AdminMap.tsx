@@ -55,7 +55,10 @@ function AdminMap({ sourceCoordinates, destinationCoordinates }: { sourceCoordin
           style={{ width: "100%", height: 450, borderRadius: 10 }}
           mapStyle="mapbox://styles/mapbox/streets-v9"
         >
-          <AdminMarkers />
+          <AdminMarkers
+            sourceCoordinates={sourceCoordinates}
+            destinationCoordinates={destinationCoordinates}
+          />
           {directionData?.routes ? (
             <AdminMapBoxRoute coordinates={directionData.routes[0].geometry.coordinates} />
           ) : null}
