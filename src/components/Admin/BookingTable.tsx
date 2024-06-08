@@ -4,7 +4,11 @@ import AdminMap from './AdminMap';
 import { Booking } from '@/types/booking';
 import "../../styles/global.css"
 
-function BookingTable() {
+interface BookingTableProps {
+  status: 'pending' | 'completed';
+}
+
+function BookingTable({ status }: BookingTableProps) {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [sourceCoordinates, setSourceCoordinates] = useState<{ lng: number; lat: number } | null>(null);
@@ -13,7 +17,7 @@ function BookingTable() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await fetch('/api/bookings');
+        const res = await fetch(`/api/bookings/${status}`);
         if (!res.ok) {
           throw new Error(`Error fetching bookings: ${res.statusText}`);
         }
@@ -24,12 +28,29 @@ function BookingTable() {
       }
     };
     fetchBookings();
-  }, []);
+  }, [status]);
 
   const handleViewDetails = (booking: Booking) => {
     setSelectedBooking(booking);
     setSourceCoordinates({ lng: booking.sourceLongitude, lat: booking.sourceLatitude });
     setDestinationCoordinates({ lng: booking.destinationLongitude, lat: booking.destinationLatitude });
+  };
+
+  const handleCompleteRide = async (id: number) => {
+    try {
+      const res = await fetch('/api/bookings/update-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, rideStatus: 'completed' }),
+      });
+      if (!res.ok) {
+        throw new Error(`Error updating booking status: ${res.statusText}`);
+      }
+      const updatedBooking: Booking = await res.json();
+      setBookings(bookings.map(b => b.id === id ? updatedBooking : b));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -55,6 +76,9 @@ function BookingTable() {
               <td>${booking.amount}</td>
               <td>
                 <button onClick={() => handleViewDetails(booking)}>View Details</button>
+                {status === 'pending' && (
+                  <button onClick={() => handleCompleteRide(booking.id)}>Complete Ride</button>
+                )}
               </td>
             </tr>
           ))}
