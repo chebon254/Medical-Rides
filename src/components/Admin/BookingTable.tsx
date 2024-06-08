@@ -34,7 +34,7 @@ function BookingTable() {
 
   return (
     <div className="container m-auto">
-      <table className="table-auto w-full">
+      <table className="table-auto w-full mb-32">
         <thead>
           <tr>
             <th>Name</th>

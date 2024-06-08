@@ -6,8 +6,8 @@ import { DirectionDataProvider } from '@/context/DirectionDataContext';
 
 function AdminPage() {
   return (
-    <div className="container m-auto my-8">
-      <h1 className="font-bold mb-5 text-5xl">Admin Dashboard</h1>
+    <div className="container m-auto">
+      <h1 className="font-bold mb-5 mt-14 text-5xl">Admin Dashboard</h1>
       <SourceCoordiProvider>
         <DestinationCoordiProvider>
           <DirectionDataProvider>

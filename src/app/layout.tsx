@@ -124,6 +124,35 @@ export default function RootLayout({
                       <main>
                           {children}
                       </main>
+                      <footer className="bg-gray-800 text-white text-base leading-6">
+                        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8  container">
+                          <div className="lg:grid lg:grid-cols-3 lg:gap-8">
+                            <div className="mb-12 lg:mb-0">
+                              <h5 className="text-xl font-semibold mb-6">Office Location:</h5>
+                              <p>8346 Sprague Way</p>
+                              <p>COLORADO SPRINGS, CO 80908</p>
+                              <p>Phone Number: +1 (719) 233-0707</p>
+                              <p>Email Address: info@peakelitemeride.com</p>
+                            </div>
+                            <div className="mb-12 lg:mb-0">
+                              <h5 className="text-xl font-semibold mb-6">Office hours:</h5>
+                              <ul className="list-none">
+                                <li>Monday 24 hours</li>
+                                <li>Tuesday 24 hours</li>
+                                <li>Wednesday 24 hours</li>
+                                <li>Thursday 24 hours</li>
+                                <li>Friday 24 hours</li>
+                                <li>Saturday 24 hours</li>
+                                <li>Sunday 24 hours</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <h5 className="text-xl font-semibold mb-6">24 hours transportation:</h5>
+                              <p>Peak Elite medride operates 24 hours a day providing timely transportation to your appointments. Having reliable and accessible transportation is our goal. If you have any specific question or need further information about our service, feel free to call or text our main office number: (719) 233-0707, or our satellite office numbers: (806) 787-6905 and (719) 306-7313.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </footer>
                     </body>
                   </html>
                 </AddressProvider>
