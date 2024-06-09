@@ -60,7 +60,7 @@ function CheckoutForm() {
             clientSecret: sec.clientSecret,
             elements,
             confirmParams: {
-                return_url: "http://localhost:3000/success"
+                return_url: "/success"
             }
         });
 
