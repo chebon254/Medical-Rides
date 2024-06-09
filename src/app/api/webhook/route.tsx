@@ -1,50 +1,51 @@
-import { NextResponse } from "next/server";
-import Stripe from "stripe";
-import { PrismaClient } from "@prisma/client";
+import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
+import { PrismaClient } from '@prisma/client';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as any, {
   typescript: true,
-  apiVersion: "2024-04-10",
+  apiVersion: '2024-04-10',
 });
 
 const prisma = new PrismaClient();
 
 export async function POST(request: any) {
-  const sig = request.headers.get("stripe-signature")!;
-  const body = await request.text();
+  const sig = request.headers.get('stripe-signature')!;
+  const buf = await request.text();
 
-  let event: Stripe.Event;
+  let event;
 
   try {
     event = stripe.webhooks.constructEvent(
-      body,
+      buf,
       sig,
-      process.env.STRIPE_WEBHOOK_SECRET as string
+      process.env.STRIPE_WEBHOOK_SECRET!
     );
-  } catch (error) {
-    const err = error as Error;
-    console.error(`Webhook signature verification failed.`, err.message);
-    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+  } catch (err: any) {
+    console.log(`Webhook Error: ${err.message}`);
+    return NextResponse.json({ error: 'Webhook error' }, { status: 400 });
   }
 
-  // Handle the event
-  switch (event.type) {
-    case "payment_intent.succeeded":
-      const paymentIntent = event.data.object as Stripe.PaymentIntent;
-      // Update booking in the database
+  if (event.type === 'payment_intent.succeeded') {
+    const paymentIntent = event.data.object as Stripe.PaymentIntent;
+
+    const {
+      name, phone, pickUpDate, pickUpTime, returnTime,
+      sourceAddress, destinationAddress, sourceCoordinates, destinationCoordinates
+    } = paymentIntent.metadata;
+
+    try {
       await prisma.booking.updateMany({
-        where: {
-          paymentIntentId: paymentIntent.id,
-        },
+        where: { paymentIntentId: paymentIntent.id },
         data: {
-          rideStatus: "paid",
+          rideStatus: "paid"
         },
       });
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
+    } catch (error: any) {
+      console.error('Error updating booking to paid:', error);
+      return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    }
   }
 
-  return new NextResponse(undefined, { status: 200 });
+  return NextResponse.json({ received: true }, { status: 200 });
 }

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { PrismaClient } from "@prisma/client";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as any, {
   typescript: true,
   apiVersion: "2024-04-10",
 });
@@ -17,6 +17,17 @@ export async function POST(request: any) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Number(amount),
       currency: "USD",
+      metadata: {
+        name,
+        phone,
+        pickUpDate,
+        pickUpTime,
+        returnTime,
+        sourceAddress,
+        destinationAddress,
+        sourceCoordinates: JSON.stringify(sourceCoordinates),
+        destinationCoordinates: JSON.stringify(destinationCoordinates)
+      }
     });
 
     await prisma.booking.create({
@@ -29,11 +40,11 @@ export async function POST(request: any) {
         returnTime,
         sourceAddress,
         destinationAddress,
-        sourceLongitude: sourceCoordinates.lng,
-        sourceLatitude: sourceCoordinates.lat,
-        destinationLongitude: destinationCoordinates.lng,
-        destinationLatitude: destinationCoordinates.lat,
-        paymentIntentId: paymentIntent.id, // Add paymentIntentId field
+        sourceLongitude: parseFloat(sourceCoordinates.lng),
+        sourceLatitude: parseFloat(sourceCoordinates.lat),
+        destinationLongitude: parseFloat(destinationCoordinates.lng),
+        destinationLatitude: parseFloat(destinationCoordinates.lat),
+        paymentIntentId: paymentIntent.id
       },
     });
 

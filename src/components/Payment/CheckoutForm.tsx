@@ -1,4 +1,3 @@
-//src/components/Payment/CheckoutForm.tsx:
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
 import { UserLocationContext } from '@/context/UserLocationContext';
 import { SourceCoordiContext } from '@/context/SourceCoordiContext';
@@ -18,7 +17,6 @@ function CheckoutForm() {
     const formDetailsContext = useContext(FormDetailsContext);
     const { sourceAddress, destinationAddress } = useAddressContext();
 
-    // Type guard
     if (!formDetailsContext) {
         throw new Error('FormDetailsContext is not available');
     }
@@ -65,12 +63,16 @@ function CheckoutForm() {
                 return_url: "http://localhost:3000/success"
             }
         });
+
+        if (error) {
+            console.error(error.message);
+        }
     };
 
     return (
         <div className='flex flex-col justify-start items-center w-full p-4 h-screen'>
             <h2 className='text-black font-bold m-2'>Checkout</h2>
-            <p className="amount-price">${carAmount}</p> {/* Display carAmount here */}
+            <p className="amount-price">${carAmount}</p>
             <form onSubmit={handleSubmit} className='max-w-md'>
                 <PaymentElement />
                 <button className='w-full bg-yellow-500 p-2 rounded-lg mt-2' type='submit' disabled={!stripe || !elements}>Pay</button>
