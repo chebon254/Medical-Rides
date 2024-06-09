@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { PrismaClient } from "@prisma/client";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as any, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   typescript: true,
   apiVersion: "2024-04-10",
 });
@@ -33,6 +33,7 @@ export async function POST(request: any) {
         sourceLatitude: sourceCoordinates.lat,
         destinationLongitude: destinationCoordinates.lng,
         destinationLatitude: destinationCoordinates.lat,
+        paymentIntentId: paymentIntent.id, // Add paymentIntentId field
       },
     });
 

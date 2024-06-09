@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^5.0.10",
     "@clerk/nextjs": "^5.1.4",
     "@prisma/client": "^5.14.0",
     "@stripe/react-stripe-js": "^2.7.1",

@@ -9,10 +9,10 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
-
 model Booking {
   id                     Int      @id @default(autoincrement())
   name                   String
@@ -28,5 +28,7 @@ model Booking {
   destinationLongitude   Float
   destinationLatitude    Float
   createdAt              DateTime @default(now())
-  rideStatus             String   @default("pending") // Add this line
+  rideStatus             String   @default("pending")
+  paymentIntentId        String?  // Add this line
 }
+

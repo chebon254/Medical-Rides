@@ -11,5 +11,6 @@ export interface Booking {
     sourceLatitude: GLfloat;
     destinationLongitude: GLfloat;
     destinationLatitude: GLfloat;
+    paymentIntentId?: string; // Add paymentIntentId field
   }
   
