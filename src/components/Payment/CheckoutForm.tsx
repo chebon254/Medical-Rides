@@ -1,21 +1,25 @@
+"use client"
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
-import { UserLocationContext } from '@/context/UserLocationContext';
 import { SourceCoordiContext } from '@/context/SourceCoordiContext';
 import { DestinationCoordiContext } from '@/context/DestinationCoordiContext';
 import { FormDetailsContext } from '@/context/FormDetailsContext';
 import { useAddressContext } from '@/context/AddressContext';
-import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useContext } from 'react';
+import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import React, { useContext, useEffect, useState } from 'react';
 
 function CheckoutForm() {
     const stripe: any = useStripe();
     const elements = useElements();
     const { carAmount } = useContext(SelectedCarAmountContext);
-    const { userLocation } = useContext(UserLocationContext);
     const { sourceCoordinates } = useContext(SourceCoordiContext);
     const { destinationCoordinates } = useContext(DestinationCoordiContext);
     const formDetailsContext = useContext(FormDetailsContext);
     const { sourceAddress, destinationAddress } = useAddressContext();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        setIsLoading(false);
+    }, []);
 
     if (!formDetailsContext) {
         throw new Error('FormDetailsContext is not available');
@@ -28,7 +32,7 @@ function CheckoutForm() {
         if (elements == null) {
             return;
         }
-
+        setIsLoading(true);
         const { error: submitError } = await elements.submit();
         if (submitError) {
             return;
@@ -54,13 +58,12 @@ function CheckoutForm() {
         });
 
         const sec = await res.json();
-        console.log(sec);
 
         const { error } = await stripe.confirmPayment({
             clientSecret: sec.clientSecret,
             elements,
             confirmParams: {
-                return_url: "/success"
+                return_url: "http://localhost:3000/success"
             }
         });
 

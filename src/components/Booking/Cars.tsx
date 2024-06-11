@@ -5,13 +5,21 @@ import Image from 'next/image';
 import { DirectionDataContext } from '@/context/DirectionDataContext';
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
 
-// Cars component
-function Cars() {
-  const [selectedCar, setSelectedCar] = useState<any>();
-  const { directionData } = useContext(DirectionDataContext);
-  const { setCarAmount } = useContext(SelectedCarAmountContext);
 
-  const getCost = (charges: any) => {
+interface Route {
+  distance: number;
+}
+
+interface DirectionData {
+  routes: Route[];
+}
+
+function Cars() {
+
+  const { directionData } = useContext(DirectionDataContext) as { directionData: DirectionData };
+  const { carAmount } = useContext(SelectedCarAmountContext);
+
+  const getCost = (charges: number): string => {
     return (charges * (directionData?.routes[0]?.distance || 0) * 0.000621371192).toFixed(0);
   };
 
@@ -22,14 +30,8 @@ function Cars() {
         {CarsList.map((item, index) => (
           <div
             key={index}
-            className={`m-2 p-2 border-[1px] rounded-md 
-            hover:border-yellow-400 cursor-pointer ${index === selectedCar ? 'border-yellow-400 border-[2px]' : ''}`}
-            onClick={() => {
-              setSelectedCar(index);
-              const cost = getCost(item.charges);
-              console.log('Cost:', cost);
-              setCarAmount(cost);
-            }}
+            className={`m-2 p-2  rounded-md 
+            hover:border-yellow-400 cursor-pointer border-yellow-400 border-[2px]`}
           >
             <Image
               src={item.image}
@@ -41,7 +43,7 @@ function Cars() {
             <h2 className='text-[12px] text-gray-500 font-medium'>
               {item.name}
               {directionData?.routes && (
-                <span className='float-right text-black'>${getCost(item.charges)}</span>
+                <span className='float-right text-black'>${carAmount}</span>
               )}
             </h2>
           </div>

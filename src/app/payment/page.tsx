@@ -4,10 +4,12 @@ import CheckoutForm from '@/components/Payment/CheckoutForm';
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { useRouter } from 'next/navigation';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
 function Payment() {
+    const router = useRouter();
     const { carAmount } = useContext(SelectedCarAmountContext);
     const [stripe, setStripe] = useState<Stripe | null>(null);
     const [loading, setLoading] = useState(true);

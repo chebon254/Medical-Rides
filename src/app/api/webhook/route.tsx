@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
 import { PrismaClient } from '@prisma/client';
+import { headers } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as any, {
   typescript: true,
@@ -9,11 +10,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as any, {
 
 const prisma = new PrismaClient();
 
-export async function POST(request: any) {
-  const sig = request.headers.get('stripe-signature')!;
+export async function POST(request: NextRequest) {
+  const sig = headers().get("stripe-signature") as string;
   const buf = await request.text();
 
-  let event;
+  let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(

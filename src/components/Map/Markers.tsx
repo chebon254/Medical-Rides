@@ -11,7 +11,7 @@ function Markers() {
 
   return (
     <>
-      <Marker longitude={userLocation?.lng} latitude={userLocation?.lat} anchor="bottom">
+      <Marker longitude={sourceCoordinates?.lng} latitude={sourceCoordinates?.lat} anchor="bottom">
         <img src="/pin.png" alt="pin" className="w-10 h-10" />
       </Marker>
       {sourceCoordinates && sourceCoordinates.length !== 0 ? (
