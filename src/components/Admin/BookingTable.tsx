@@ -63,6 +63,7 @@ function BookingTable({ status }: BookingTableProps) {
             <th>Pick Up Date</th>
             <th>Pick Up Time</th>
             <th>Amount</th>
+            <th>Payment Status</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -74,6 +75,7 @@ function BookingTable({ status }: BookingTableProps) {
               <td>{new Date(booking.pickUpDate).toLocaleDateString()}</td>
               <td>{booking.pickUpTime}</td>
               <td>${booking.amount}</td>
+              <td>{booking.rideStatus}</td>
               <td>
                 <button onClick={() => handleViewDetails(booking)}>View Details</button>
                 {status === 'pending' && (

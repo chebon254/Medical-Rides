@@ -11,7 +11,7 @@ function CompletedRidesPage() {
       <SourceCoordiProvider>
         <DestinationCoordiProvider>
           <DirectionDataProvider>
-            <BookingTable status="pending" />
+            <BookingTable status="completed" />
           </DirectionDataProvider>
         </DestinationCoordiProvider>
       </SourceCoordiProvider>
