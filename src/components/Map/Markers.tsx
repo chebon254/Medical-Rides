@@ -1,4 +1,3 @@
-import { UserLocationContext } from '@/context/UserLocationContext';
 import { SourceCoordiContext } from '@/context/SourceCoordiContext';
 import { DestinationCoordiContext } from '@/context/DestinationCoordiContext';
 import React, { useContext } from 'react';
@@ -7,7 +6,6 @@ import { Map, Marker } from 'react-map-gl';
 function Markers() {
   const { sourceCoordinates, setSourceCoordinates } = useContext(SourceCoordiContext);
   const { destinationCoordinates, setDestinationCoordinates } = useContext(DestinationCoordiContext);
-  const { userLocation, setUserLocation } = useContext(UserLocationContext);
 
   return (
     <>

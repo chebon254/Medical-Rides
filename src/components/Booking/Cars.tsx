@@ -25,7 +25,6 @@ function Cars() {
 
   return (
     <div className='mt-3'>
-      <h2 className='font-semibold'>Select Car</h2>
       <div className='grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 m-1 p-2'>
         {CarsList.map((item, index) => (
           <div

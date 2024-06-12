@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import Map from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { UserLocationContext } from '@/context/UserLocationContext';
 import { DestinationCoordiContext } from '@/context/DestinationCoordiContext';
 import { SourceCoordiContext } from '@/context/SourceCoordiContext';
 import Markers from './Markers';

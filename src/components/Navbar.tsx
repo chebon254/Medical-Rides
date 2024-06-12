@@ -86,7 +86,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/medical-form"
+                href="/forms"
                 passHref
                 className={`block py-2 pl-3 pr-4 ${
                   activePage === "schedule"
