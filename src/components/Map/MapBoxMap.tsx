@@ -14,6 +14,10 @@ import { FormDetailsContext, FormDetailsContextType } from '@/context/FormDetail
 const MAPBOX_DRIVING_ENDPOINT = "https://api.mapbox.com/directions/v5/mapbox/driving/"
 const session_token = "0e4d5549-e85f-4591-88f5-11822aa0aaba"
 
+// Colorado Springs, CO - default map center when no address has been entered yet
+const DEFAULT_CENTER = { lng: -104.8214, lat: 38.8339 };
+const DEFAULT_ZOOM = 11;
+
 function MapBoxMap() {
   const mapRef =  useRef<any>();
   const { sourceCoordinates, setSourceCoordinates } = useContext(SourceCoordiContext);
@@ -94,27 +98,24 @@ function MapBoxMap() {
         <DistanceTime/>
       </div>
       <div className='rounded-lg overflow-hidden'>
-        {sourceCoordinates && destinationCoordinates ? (
-          <Map
-          ref = {mapRef}
-            mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-            initialViewState={{
-              longitude: sourceCoordinates.lng,
-              latitude: sourceCoordinates.lat,
-              zoom: 14
-            }}
-            style={{ width: "100%", height: 450, borderRadius: 10 }}
-            mapStyle="mapbox://styles/mapbox/streets-v9"
-          >
-
-            <Markers/>
-            {directionData?.routes? (
-              <MapBoxRoute
-                coordinates = {directionData?.routes[0]?.geometry?.coordinates}
-              />
-            ):null}
-          </Map>
-        ) : null}
+        <Map
+          ref={mapRef}
+          mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+          initialViewState={{
+            longitude: sourceCoordinates?.lng ?? DEFAULT_CENTER.lng,
+            latitude: sourceCoordinates?.lat ?? DEFAULT_CENTER.lat,
+            zoom: sourceCoordinates ? 14 : DEFAULT_ZOOM
+          }}
+          style={{ width: "100%", height: 450, borderRadius: 10 }}
+          mapStyle="mapbox://styles/mapbox/streets-v9"
+        >
+          <Markers/>
+          {directionData?.routes? (
+            <MapBoxRoute
+              coordinates = {directionData?.routes[0]?.geometry?.coordinates}
+            />
+          ):null}
+        </Map>
       </div>
     </div>
   );
