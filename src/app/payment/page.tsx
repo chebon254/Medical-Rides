@@ -32,8 +32,8 @@ function Payment() {
     return (
         <>
             {loading ? (
-                <div className="container">
-                    <p>Loading...</p> 
+                <div className="flex items-center justify-center min-h-screen">
+                    <p className="text-slate-500">Loading...</p>
                 </div>// Show loading text while Stripe is being loaded
             ) : (
                 <Elements stripe={stripe} options={options}>

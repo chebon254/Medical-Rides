@@ -2,10 +2,23 @@
 import React, { useState, useEffect } from 'react';
 import AdminMap from './AdminMap';
 import { Booking } from '@/types/booking';
-import "../../styles/global.css"
 
 interface BookingTableProps {
   status: 'pending' | 'completed';
+}
+
+const statusStyles: Record<string, string> = {
+  pending: 'bg-amber-100 text-amber-700',
+  paid: 'bg-teal-100 text-teal-700',
+  completed: 'bg-teal-100 text-teal-700',
+};
+
+function StatusPill({ status }: { status: string }) {
+  return (
+    <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${statusStyles[status] ?? 'bg-slate-100 text-slate-700'}`}>
+      {status}
+    </span>
+  );
 }
 
 function BookingTable({ status }: BookingTableProps) {
@@ -54,48 +67,78 @@ function BookingTable({ status }: BookingTableProps) {
   };
 
   return (
-    <div className="container m-auto">
-      <table className="table-auto w-full mb-32">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Pick Up Date</th>
-            <th>Pick Up Time</th>
-            <th>Amount</th>
-            <th>Payment Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bookings.map((booking) => (
-            <tr key={booking.id}>
-              <td>{booking.name}</td>
-              <td>{booking.phone}</td>
-              <td>{new Date(booking.pickUpDate).toLocaleDateString()}</td>
-              <td>{booking.pickUpTime}</td>
-              <td>${booking.amount}</td>
-              <td>{booking.rideStatus}</td>
-              <td>
-                <button onClick={() => handleViewDetails(booking)}>View Details</button>
-                {status === 'pending' && (
-                  <button onClick={() => handleCompleteRide(booking.id)}>Complete Ride</button>
-                )}
-              </td>
+    <div className="mb-32">
+      <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm bg-white">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-slate-900 text-white text-left uppercase text-xs tracking-wide">
+              <th className="px-4 py-3 font-semibold">Name</th>
+              <th className="px-4 py-3 font-semibold">Phone</th>
+              <th className="px-4 py-3 font-semibold">Pick Up Date</th>
+              <th className="px-4 py-3 font-semibold">Pick Up Time</th>
+              <th className="px-4 py-3 font-semibold">Amount</th>
+              <th className="px-4 py-3 font-semibold">Payment Status</th>
+              <th className="px-4 py-3 font-semibold">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {bookings.map((booking, index) => (
+              <tr
+                key={booking.id}
+                className={`${index % 2 === 0 ? 'bg-white' : 'bg-slate-50'} hover:bg-teal-50 transition-colors`}
+              >
+                <td className="px-4 py-3 text-slate-800 font-medium">{booking.name}</td>
+                <td className="px-4 py-3 text-slate-600">{booking.phone}</td>
+                <td className="px-4 py-3 text-slate-600">{new Date(booking.pickUpDate).toLocaleDateString()}</td>
+                <td className="px-4 py-3 text-slate-600">{booking.pickUpTime}</td>
+                <td className="px-4 py-3 text-slate-800 font-semibold">${booking.amount}</td>
+                <td className="px-4 py-3"><StatusPill status={booking.rideStatus} /></td>
+                <td className="px-4 py-3">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleViewDetails(booking)}
+                      className="px-3 py-1.5 rounded-md text-teal-700 bg-teal-50 hover:bg-teal-100 font-medium transition-colors"
+                    >
+                      View Details
+                    </button>
+                    {status === 'pending' && (
+                      <button
+                        onClick={() => handleCompleteRide(booking.id)}
+                        className="px-3 py-1.5 rounded-md text-slate-900 bg-amber-500 hover:bg-amber-600 font-medium transition-colors"
+                      >
+                        Complete Ride
+                      </button>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {bookings.length === 0 && (
+              <tr>
+                <td colSpan={7} className="px-4 py-8 text-center text-slate-400">
+                  No {status} rides found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
       {selectedBooking && (
-        <div className="modal">
-          <div className="modal-content relative z-0 pt-8">
-            <span className="close absolute top-2 right-5 z-10" onClick={() => setSelectedBooking(null)}>&times;</span>
-            <h2 className="mb-3 font-bold text-2xl">Booking Details</h2>
-            <p className="my-1"><span className="font-semibold">Name:</span> {selectedBooking.name}</p>
-            <p className="my-1"><span className="font-semibold">Phone:</span> {selectedBooking.phone}</p>
-            <p className="my-1"><span className="font-semibold">Amount Paid:</span> ${selectedBooking.amount}</p>
-            <p className="my-1"><span className="font-semibold">Pick Up Address:</span> {selectedBooking.sourceAddress}</p>
-            <p className="my-1 mb-6"><span className="font-semibold">Drop Off Address:</span> {selectedBooking.destinationAddress}</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl p-6 pt-10 max-h-[90vh] overflow-y-auto">
+            <button
+              className="absolute top-3 right-4 text-slate-400 hover:text-slate-700 text-2xl leading-none"
+              onClick={() => setSelectedBooking(null)}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <h2 className="mb-3 font-manrope font-bold text-2xl text-slate-900">Booking Details</h2>
+            <p className="my-1 text-slate-700"><span className="font-semibold text-slate-900">Name:</span> {selectedBooking.name}</p>
+            <p className="my-1 text-slate-700"><span className="font-semibold text-slate-900">Phone:</span> {selectedBooking.phone}</p>
+            <p className="my-1 text-slate-700"><span className="font-semibold text-slate-900">Amount Paid:</span> ${selectedBooking.amount}</p>
+            <p className="my-1 text-slate-700"><span className="font-semibold text-slate-900">Pick Up Address:</span> {selectedBooking.sourceAddress}</p>
+            <p className="my-1 mb-6 text-slate-700"><span className="font-semibold text-slate-900">Drop Off Address:</span> {selectedBooking.destinationAddress}</p>
             <AdminMap
               sourceCoordinates={sourceCoordinates}
               destinationCoordinates={destinationCoordinates}

@@ -7,10 +7,10 @@ function serviceArea() {
         <section className="py-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mb-16">
-                    <h6 className="text-lg text-indigo-600 font-medium text-center mb-2">
+                    <h6 className="text-lg text-teal-600 font-medium text-center mb-2">
                         Areas
                     </h6>
-                    <h2 className="text-6xl font-manrope text-center font-bold text-gray-900 leading-[3.25rem]">
+                    <h2 className="text-6xl font-manrope text-center font-bold text-slate-900 leading-[3.25rem]">
                         Service Areas
                     </h2>
                 </div>

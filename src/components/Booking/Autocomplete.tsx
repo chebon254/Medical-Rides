@@ -141,22 +141,22 @@ function Autocomplete() {
   return (
     <div className="m-1">
       <div className="mt-3 relative">
-        <label>Where From?</label>
+        <label className="text-sm font-medium text-slate-700 mb-1 block">Where From?</label>
         <input
           name="address"
           placeholder="Address"
           type="text"
-          className="bg-white p-1 focus:border-yellow-300 border-[1px] w-full rounded-md outline-none"
+          className="bg-white px-3 py-2 border border-slate-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 w-full rounded-md outline-none transition-shadow"
           value={sourceInput || ''}
           onChange={(e) => setSourceInput(e.target.value)}
         />
         {sourceInput && addressList.length > 0 && (
-          <div className=" shadow-md p-1 rounded-md w-full bg-white">
+          <div className="absolute z-10 shadow-lg border border-slate-100 p-1 rounded-md w-full bg-white">
             {addressList.map(
               (address) => (
                 <h2
                   key={address.mapbox_id}
-                  className="p-3 hover:bg-grey-100 cursor-pointer"
+                  className="p-3 rounded hover:bg-teal-50 cursor-pointer text-sm text-slate-700"
                   onClick={() => {
                     onSourceAddressClick(address);
                   }}
@@ -169,21 +169,21 @@ function Autocomplete() {
         )}
       </div>
       <div className="mt-3 relative">
-        <label>Where To?</label>
+        <label className="text-sm font-medium text-slate-700 mb-1 block">Where To?</label>
         <input
           type="text"
-          className="bg-white p-1 focus:border-yellow-300 border-[1px] w-full rounded-md outline-none"
+          className="bg-white px-3 py-2 border border-slate-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-100 w-full rounded-md outline-none transition-shadow"
           value={destination || ''}
           onChange={(e) => setDestination(e.target.value)}
         />
         {destination &&
           destinationAddressList.length > 0 && (
-            <div className="absolute shadow-md p-1 rounded-md w-full bg-white">
+            <div className="absolute z-10 shadow-lg border border-slate-100 p-1 rounded-md w-full bg-white">
               {destinationAddressList.map(
                 (address) => (
                   <h2
                     key={address.mapbox_id}
-                    className="p-3 hover:bg-grey-100 cursor-pointer"
+                    className="p-3 rounded hover:bg-teal-50 cursor-pointer text-sm text-slate-700"
                     onClick={() => {
                       onDestinationAddressClick(address);
                     }}

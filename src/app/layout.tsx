@@ -7,11 +7,12 @@ import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
 import { FormDetailsProvider } from '@/context/FormDetailsContext';
 import { AddressProvider } from '@/context/AddressContext';
 
-import { Inter } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 
 export default function RootLayout({
   children,
@@ -32,8 +33,8 @@ export default function RootLayout({
               <SelectedCarAmountContext.Provider value={{ carAmount, setCarAmount }}>
                 <FormDetailsProvider>
                   <AddressProvider>
-                    <html lang="en">
-                      <body>
+                    <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
+                      <body className="font-sans">
                         <main>
                             {children}
                         </main>

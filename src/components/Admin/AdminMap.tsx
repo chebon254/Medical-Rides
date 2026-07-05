@@ -42,8 +42,8 @@ function AdminMap({ sourceCoordinates, destinationCoordinates }: { sourceCoordin
 
   return (
     <div className='m-1 relative'>
-      <h2 className='text-[20px] font-semibold'>Map</h2>
-      <div className='rounded-lg overflow-hidden'>
+      <h2 className='font-manrope text-[20px] font-semibold text-slate-900'>Map</h2>
+      <div className='rounded-xl overflow-hidden border border-slate-200 shadow-sm'>
         <Map
           ref={mapRef}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}

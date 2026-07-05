@@ -6,8 +6,8 @@ import { DirectionDataProvider } from '@/context/DirectionDataContext';
 
 function CompletedRidesPage() {
   return (
-    <div className="container m-auto">
-      <h1 className="font-bold mb-5 mt-14 text-5xl">Completed Rides</h1>
+    <div className="max-w-screen-lg mx-auto px-4">
+      <h1 className="font-manrope font-bold mb-5 mt-14 text-4xl text-slate-900">Completed Rides</h1>
       <SourceCoordiProvider>
         <DestinationCoordiProvider>
           <DirectionDataProvider>

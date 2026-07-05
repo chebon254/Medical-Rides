@@ -29,8 +29,7 @@ function Cars() {
         {CarsList.map((item, index) => (
           <div
             key={index}
-            className={`m-2 p-2  rounded-md 
-            hover:border-yellow-400 cursor-pointer border-yellow-400 border-[2px]`}
+            className="m-2 p-3 rounded-xl bg-white transition-colors cursor-pointer border-2 border-teal-500 hover:border-teal-600"
           >
             <Image
               src={item.image}
@@ -39,10 +38,10 @@ function Cars() {
               height={100}
               className='w-full'
             />
-            <h2 className='text-[12px] text-gray-500 font-medium'>
+            <h2 className='mt-1 text-sm text-slate-600 font-medium'>
               {item.name}
               {directionData?.routes && (
-                <span className='float-right text-black'>${carAmount}</span>
+                <span className='float-right text-slate-900 font-semibold'>${carAmount}</span>
               )}
             </h2>
           </div>
