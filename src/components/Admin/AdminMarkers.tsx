@@ -1,6 +1,5 @@
 import React from 'react';
 import { Marker } from 'react-map-gl';
-import Image from 'next/image';
 
 interface MarkersProps {
   sourceCoordinates: { lng: number; lat: number } | null;
@@ -12,12 +11,12 @@ function AdminMarkers({ sourceCoordinates, destinationCoordinates }: MarkersProp
     <>
       {sourceCoordinates && (
         <Marker longitude={sourceCoordinates.lng} latitude={sourceCoordinates.lat} anchor="bottom">
-          <Image src="/pin.png" alt="pin" className="w-10 h-10" />
+          <img src="/pin.png" alt="pin" className="w-10 h-10" />
         </Marker>
       )}
       {destinationCoordinates && (
         <Marker longitude={destinationCoordinates.lng} latitude={destinationCoordinates.lat} anchor="bottom">
-          <Image src="/pin.png" alt="pin" className="w-10 h-10" />
+          <img src="/pin.png" alt="pin" className="w-10 h-10" />
         </Marker>
       )}
     </>

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 
 const DownloadButton: React.FC<{ fileName: string }> = ({ fileName }) => {

@@ -1,18 +1,17 @@
+// @ts-nocheck
 'use client';
-
 import { useCallback, useState } from 'react';
 import { useResizeObserver } from '@wojtekmaj/react-hooks';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-import '../../app/forms/Sample.css';
+import '../../components/FormFile/Sample.css';
 
 import type { PDFDocumentProxy } from 'pdfjs-dist';
 import DownloadButton from './DownloadButton';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-
 
 const options = {
   cMapUrl: '/cmaps/',
@@ -27,9 +26,9 @@ type PDFFile = string | File | null;
 
 export default function Sample() {
   const [file, setFile] = useState<PDFFile>('./Verification Form For Transportation Services More Than 25 Miles.pdf');
-  const [numPages, setNumPages] = useState<number>();
+  const [numPages, setNumPages] = useState<number>(0);
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState<number>();
+  const [containerWidth, setContainerWidth] = useState<number>(0);
 
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;

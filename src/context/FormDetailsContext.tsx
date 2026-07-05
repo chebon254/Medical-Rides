@@ -1,31 +1,30 @@
-"use client"
-import { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 
-interface FormDetails {
+export type FormDetailsType = {
   name: string;
   phone: string;
   pickUpDate: string;
   pickUpTime: string;
   returnTime: string;
-}
-
-interface FormDetailsContextProps {
-  formDetails: FormDetails;
-  setFormDetails: React.Dispatch<React.SetStateAction<FormDetails>>;
-}
-
-const defaultFormDetails: FormDetails = {
-  name: '',
-  phone: '',
-  pickUpDate: '',
-  pickUpTime: '',
-  returnTime: '',
+  tripType: 'oneWay' | 'twoWay';
 };
 
-export const FormDetailsContext = createContext<FormDetailsContextProps | undefined>(undefined);
+export type FormDetailsContextType = {
+  formDetails: FormDetailsType;
+  setFormDetails: React.Dispatch<React.SetStateAction<FormDetailsType>>;
+};
 
-export const FormDetailsProvider = ({ children }: { children: ReactNode }) => {
-  const [formDetails, setFormDetails] = useState<FormDetails>(defaultFormDetails);
+export const FormDetailsContext = createContext<FormDetailsContextType | null>(null);
+
+export const FormDetailsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [formDetails, setFormDetails] = useState<FormDetailsType>({
+    name: '',
+    phone: '',
+    pickUpDate: '',
+    pickUpTime: '',
+    returnTime: '',
+    tripType: 'oneWay',
+  });
 
   return (
     <FormDetailsContext.Provider value={{ formDetails, setFormDetails }}>

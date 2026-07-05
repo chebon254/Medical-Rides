@@ -9,6 +9,7 @@ import { DirectionDataContext } from '@/context/DirectionDataContext';
 import MapBoxRoute from './MapBoxRoute';
 import DistanceTime from './DistanceTime';
 import { SelectedCarAmountContext } from '@/context/SelectedCarAmountContext';
+import { FormDetailsContext, FormDetailsContextType } from '@/context/FormDetailsContext';
 
 const MAPBOX_DRIVING_ENDPOINT = "https://api.mapbox.com/directions/v5/mapbox/driving/"
 const session_token = "0e4d5549-e85f-4591-88f5-11822aa0aaba"
@@ -19,6 +20,27 @@ function MapBoxMap() {
   const { destinationCoordinates, setDestinationCoordinates } = useContext(DestinationCoordiContext);
   const { directionData, setDirectionData } = useContext(DirectionDataContext);
   const { setCarAmount } = useContext(SelectedCarAmountContext);
+  const context = useContext(FormDetailsContext);
+
+  if (!context) {
+    throw new Error('FormDetails must be used within a FormDetailsProvider');
+  }
+
+  const { formDetails } = context;
+
+  useEffect(() => {
+    const calculateCarAmount = () => {
+      if (!directionData) return;
+
+      const distance = directionData.routes?.[0]?.distance || 0;
+      const distanceInMiles = distance * 0.000621371192;
+      const multiplier = formDetails.tripType === 'twoWay' ? 4 : 2;
+      const newCarAmount = multiplier * Number(distanceInMiles.toFixed(0));
+      setCarAmount(newCarAmount);
+    };
+
+    calculateCarAmount();
+  }, [formDetails.tripType, directionData]);
 
   useEffect(()=>{
     if(sourceCoordinates){
@@ -40,7 +62,7 @@ function MapBoxMap() {
     if (sourceCoordinates && destinationCoordinates) {
       getDirectionRoute();
     }
-  }, [sourceCoordinates, destinationCoordinates]);
+  }, [sourceCoordinates, destinationCoordinates, ]);
   
 
   const getDirectionRoute = async () => {
@@ -57,13 +79,9 @@ function MapBoxMap() {
           'Content-Type': 'application/json',
         },
       });
+
       const result = await res.json();
       setDirectionData(result);
-
-      const distance = result.routes?.[0]?.distance || 0;
-      const carAmount = 2 * Number((distance * 0.000621371192).toFixed(0));
-      setCarAmount(carAmount);
-
     } catch (error) {
       console.error('Error fetching direction route:', error);
     }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useRef, useCallback } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import Map from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { DirectionDataContext } from '@/context/DirectionDataContext';
@@ -13,13 +13,7 @@ function AdminMap({ sourceCoordinates, destinationCoordinates }: { sourceCoordin
   const mapRef = useRef<any>();
   const { directionData, setDirectionData } = useContext(DirectionDataContext);
 
-  useEffect(() => {
-    if (sourceCoordinates && destinationCoordinates) {
-      getDirectionRoute();
-    }
-  }, [sourceCoordinates, destinationCoordinates]);
-
-  const getDirectionRoute = async () => {
+  const getDirectionRoute = useCallback(async () => {
     if (!sourceCoordinates || !destinationCoordinates) {
       console.error('Source or destination coordinates are missing');
       return;
@@ -38,7 +32,13 @@ function AdminMap({ sourceCoordinates, destinationCoordinates }: { sourceCoordin
     } catch (error) {
       console.error('Error fetching direction route:', error);
     }
-  };
+  }, [sourceCoordinates, destinationCoordinates]);
+
+  useEffect(() => {
+    if (sourceCoordinates && destinationCoordinates) {
+      getDirectionRoute();
+    }
+  }, [sourceCoordinates, destinationCoordinates, getDirectionRoute]);
 
   return (
     <div className='m-1 relative'>
