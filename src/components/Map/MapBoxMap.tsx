@@ -92,30 +92,27 @@ function MapBoxMap() {
   };
 
   return (
-    <div className='m-1 '>
-      <h2 className='font-manrope text-[20px] font-semibold text-slate-900'>Map</h2>
-      <div className='bottom-[40px] m-4 right-[20px] hidden md:block'>
+    <div className='relative h-[340px] overflow-hidden rounded-2xl border border-slate-200 shadow-lg shadow-slate-900/5 md:h-[calc(100vh-180px)] md:min-h-[480px]'>
+      <Map
+        ref={mapRef}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+        initialViewState={{
+          longitude: sourceCoordinates?.lng ?? DEFAULT_CENTER.lng,
+          latitude: sourceCoordinates?.lat ?? DEFAULT_CENTER.lat,
+          zoom: sourceCoordinates ? 14 : DEFAULT_ZOOM
+        }}
+        style={{ width: "100%", height: "100%" }}
+        mapStyle="mapbox://styles/mapbox/streets-v12"
+      >
+        <Markers/>
+        {directionData?.routes? (
+          <MapBoxRoute
+            coordinates = {directionData?.routes[0]?.geometry?.coordinates}
+          />
+        ):null}
+      </Map>
+      <div className='pointer-events-none absolute left-1/2 top-4 z-10 -translate-x-1/2'>
         <DistanceTime/>
-      </div>
-      <div className='rounded-xl overflow-hidden border border-slate-200 shadow-sm'>
-        <Map
-          ref={mapRef}
-          mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-          initialViewState={{
-            longitude: sourceCoordinates?.lng ?? DEFAULT_CENTER.lng,
-            latitude: sourceCoordinates?.lat ?? DEFAULT_CENTER.lat,
-            zoom: sourceCoordinates ? 14 : DEFAULT_ZOOM
-          }}
-          style={{ width: "100%", height: 450, borderRadius: 10 }}
-          mapStyle="mapbox://styles/mapbox/streets-v9"
-        >
-          <Markers/>
-          {directionData?.routes? (
-            <MapBoxRoute
-              coordinates = {directionData?.routes[0]?.geometry?.coordinates}
-            />
-          ):null}
-        </Map>
       </div>
     </div>
   );

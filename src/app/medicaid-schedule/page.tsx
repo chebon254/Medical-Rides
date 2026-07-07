@@ -1,4 +1,4 @@
-"use client"; // Remove this line
+"use client";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { useForm } from "react-hook-form";
@@ -37,95 +37,129 @@ const Schedule = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-slate-50">
       <Navbar />
-      <div className="ml-6 mr-6 mt-8">
-        <div className="mb-6">
-          <label htmlFor="name" className="block mb-2 text-sm font-medium text-black">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            {...register("name")}
-          />
+      <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+        <div className="mb-8 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-600/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-teal-700">
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Medicaid covered
+          </span>
+          <h1 className="mt-3 font-manrope text-3xl font-bold text-slate-900 sm:text-4xl">
+            Schedule with Medicaid
+          </h1>
+          <p className="mt-2 text-slate-500">
+            Fill in your trip details and we&apos;ll take care of the rest.
+          </p>
         </div>
-        <div className="mb-6">
-          <label htmlFor="phone" className="block mb-2 text-sm font-medium text-black">
-            Phone Number
-          </label>
-          <input
-            type="text"
-            id="phone"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            {...register("phone")}
-          />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="pickupDate" className="block mb-2 text-sm font-medium text-black">
-            Pick up Date
-          </label>
-          <input
-            type="text"
-            id="pickupDate"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            {...register("pickupDateTime")}
-          />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="pickupTime" className="block mb-2 text-sm font-medium text-black">
-            Pick up time
-          </label>
-          <input
-            type="text"
-            id="pickupTime"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            {...register("pickupTime")}
-          />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="pickupAddress" className="block mb-2 text-sm font-medium text-black">
-            Pick up Address
-          </label>
-          <input
-            type="text"
-            id="pickupAddress"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            {...register("pickupAddress")}
-          />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="dropoffAddress" className="block mb-2 text-sm font-medium text-black">
-            Drop off Address
-          </label>
-          <input
-            type="text"
-            id="dropoffAddress"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            {...register("dropoffAddress")}
-          />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="returnTime" className="block mb-2 text-sm font-medium text-black">
-            Return Time
-          </label>
-          <input
-            type="text"
-            id="returnTime"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            {...register("returnTime")}
-          />
-        </div>
-        <button
-          className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-32 mb-2 dark:focus:ring-yellow-900"
-          onClick={handleSubmit(onSubmit)}
-          disabled={isLoading}
-        >
-          {isLoading ? "Submitting..." : "Submit"}
-        </button>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="card p-6 sm:p-8">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div>
+              <label htmlFor="name" className="form-label">Name</label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Full name"
+                className="form-input"
+                {...register("name")}
+              />
+            </div>
+            <div>
+              <label htmlFor="phone" className="form-label">Phone number</label>
+              <input
+                type="tel"
+                id="phone"
+                placeholder="(719) 000-0000"
+                className="form-input"
+                {...register("phone")}
+              />
+            </div>
+            <div>
+              <label htmlFor="pickupDate" className="form-label">Pick-up date</label>
+              <input
+                type="date"
+                id="pickupDate"
+                className="form-input"
+                {...register("pickupDateTime")}
+              />
+            </div>
+            <div>
+              <label htmlFor="pickupTime" className="form-label">Pick-up time</label>
+              <input
+                type="time"
+                id="pickupTime"
+                className="form-input"
+                {...register("pickupTime")}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label htmlFor="pickupAddress" className="form-label">Pick-up address</label>
+              <div className="relative">
+                <span className="pointer-events-none absolute left-3.5 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-teal-500 ring-4 ring-teal-500/15" />
+                <input
+                  type="text"
+                  id="pickupAddress"
+                  placeholder="Street address, city"
+                  className="form-input pl-9"
+                  {...register("pickupAddress")}
+                />
+              </div>
+            </div>
+            <div className="sm:col-span-2">
+              <label htmlFor="dropoffAddress" className="form-label">Drop-off address</label>
+              <div className="relative">
+                <span className="pointer-events-none absolute left-3.5 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-[3px] bg-amber-500 ring-4 ring-amber-500/15" />
+                <input
+                  type="text"
+                  id="dropoffAddress"
+                  placeholder="Street address, city"
+                  className="form-input pl-9"
+                  {...register("dropoffAddress")}
+                />
+              </div>
+            </div>
+            <div className="sm:col-span-2">
+              <label htmlFor="returnTime" className="form-label">Return time</label>
+              <input
+                type="time"
+                id="returnTime"
+                className="form-input"
+                {...register("returnTime")}
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="btn-primary mt-7"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                </svg>
+                Submitting...
+              </>
+            ) : (
+              <>
+                Request my ride
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                </svg>
+              </>
+            )}
+          </button>
+          <p className="mt-3 text-center text-xs text-slate-400">
+            We&apos;ll confirm your booking by phone.
+          </p>
+        </form>
+      </main>
       <Footer />
-      </div>
     </div>
   );
 };

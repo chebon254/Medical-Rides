@@ -79,16 +79,19 @@ function CheckoutForm() {
 
     return (
         <div className='flex flex-col justify-start items-center w-full p-4 min-h-screen bg-slate-50'>
-            <div className='w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-6 mt-8'>
-                <h2 className='font-manrope text-slate-900 font-bold text-xl mb-1'>Checkout</h2>
-                <p className="text-3xl font-bold text-teal-600 mb-4">${carAmount}</p>
-                <form onSubmit={handleSubmit}>
+            <div className='w-full max-w-md rounded-2xl shadow-lg shadow-slate-900/5 border border-slate-200 mt-8 overflow-hidden bg-white'>
+                <div className='bg-gradient-to-r from-teal-600 to-teal-500 px-6 py-5'>
+                    <h2 className='font-manrope text-white font-bold text-lg'>Checkout</h2>
+                    <p className="text-3xl font-bold text-white mt-1">${carAmount}</p>
+                    <p className='text-teal-50 text-xs mt-0.5'>Total fare &middot; {formDetails.tripType === 'twoWay' ? 'round trip' : 'one way'}</p>
+                </div>
+                <form onSubmit={handleSubmit} className='p-6'>
 
                     <PaymentElement options={paymentElementOptions}/>
                     <button
                         disabled={isLoading || !stripe || !elements}
                         id="submit"
-                        className="flex items-center justify-center text-lg font-semibold px-5 py-3 bg-amber-500 hover:bg-amber-600 disabled:bg-slate-200 disabled:text-slate-400 text-slate-900 rounded-lg mt-5 w-full transition-colors"
+                        className="flex items-center justify-center text-lg font-semibold px-5 py-3 bg-amber-500 hover:bg-amber-600 disabled:bg-slate-200 disabled:text-slate-400 text-slate-900 rounded-xl mt-5 w-full transition-colors shadow-lg shadow-amber-500/20 disabled:shadow-none"
                     >
                         <span id="button-text">
                             {isLoading ? (

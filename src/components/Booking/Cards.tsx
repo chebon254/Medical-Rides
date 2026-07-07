@@ -6,23 +6,32 @@ import Image from 'next/image'
 function Cards() {
     const [activeIndex, setActiveindex] = useState<any>()
     return (
-        <div className='mt-3'>
-            <h2 className='font-semibold text-slate-700 text-sm'>Payment Options</h2>
-            <div className='grid grid-cols-4 mt-2 h-[45px] gap-2'>
+        <div>
+            <div className="grid grid-cols-4 gap-2">
                 {CardsList.map((item, index) => (
-                    <div key={index} className={`rounded-md h-[38] w-[60px]
-                    border flex items-center
-                    justify-center
-                    cursor-pointer
-                    hover:border-teal-500
-                    hover:scale-110 transition-all ${activeIndex==index?'border-teal-500 border-2':'border-slate-300'}`}
-                    onClick={()=>setActiveindex(index)}>
+                    <button
+                        type="button"
+                        key={index}
+                        className={`relative flex h-12 items-center justify-center rounded-xl border bg-white transition-all duration-200 hover:border-teal-400 ${
+                            activeIndex === index
+                                ? 'border-teal-500 ring-2 ring-teal-500/20'
+                                : 'border-slate-200'
+                        }`}
+                        onClick={() => setActiveindex(index)}
+                    >
+                        {activeIndex === index && (
+                            <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-teal-500 text-white shadow">
+                                <svg className="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                            </span>
+                        )}
                         <Image src={item.image}
-                            alt='Payment Option'
+                            alt={item.name}
                             width={36}
                             height={50}
                         />
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>

@@ -17,10 +17,10 @@ function MapBoxRoute(props:any) {
         }
         ]
     }}>
-        <Layer 
+        <Layer
             type='line'
-            layout={{ 'line-join': 'round', 'line-cap': 'square' }}
-            paint={{ 'line-color': '#0462d4', 'line-width': 4 }}
+            layout={{ 'line-join': 'round', 'line-cap': 'round' }}
+            paint={{ 'line-color': '#0d9488', 'line-width': 5, 'line-opacity': 0.9 }}
         />
     </Source>
   )

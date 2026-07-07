@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import CarsList from '../Data/CarsList';
 import Image from 'next/image';
 import { DirectionDataContext } from '@/context/DirectionDataContext';
@@ -19,34 +19,36 @@ function Cars() {
   const { directionData } = useContext(DirectionDataContext) as { directionData: DirectionData };
   const { carAmount } = useContext(SelectedCarAmountContext);
 
-  const getCost = (charges: number): string => {
-    return (charges * (directionData?.routes[0]?.distance || 0) * 0.000621371192).toFixed(0);
-  };
-
   return (
-    <div className='mt-3'>
-      <div className='grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 m-1 p-2'>
-        {CarsList.map((item, index) => (
-          <div
-            key={index}
-            className="m-2 p-3 rounded-xl bg-white transition-colors cursor-pointer border-2 border-teal-500 hover:border-teal-600"
-          >
-            <Image
-              src={item.image}
-              alt='Car'
-              width={260}
-              height={100}
-              className='w-full'
-            />
-            <h2 className='mt-1 text-sm text-slate-600 font-medium'>
-              {item.name}
-              {directionData?.routes && (
-                <span className='float-right text-slate-900 font-semibold'>${carAmount}</span>
-              )}
-            </h2>
+    <div className="space-y-2">
+      {CarsList.map((item, index) => (
+        <div
+          key={index}
+          className="relative flex items-center gap-4 rounded-2xl border-2 border-teal-500 bg-teal-50/40 p-3 transition-colors"
+        >
+          <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-teal-500 text-white">
+            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </span>
+          <Image
+            src={item.image}
+            alt="Car"
+            width={120}
+            height={70}
+            className="w-28 flex-shrink-0 rounded-xl object-contain"
+          />
+          <div className="min-w-0 flex-1">
+            <h2 className="text-sm font-semibold text-slate-900">{item.name}</h2>
+            <p className="text-xs text-slate-500">Door-to-door service</p>
+            {directionData?.routes ? (
+              <p className="mt-1 text-lg font-bold text-teal-700">${String(carAmount)}</p>
+            ) : (
+              <p className="mt-1 text-xs font-medium text-slate-400">Enter a route to see the fare</p>
+            )}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }
